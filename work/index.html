@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gustavo Martinez - Work</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css"> <!-- Reuse main styles -->
+    <style>
+        .wip-main {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: calc(100vh - 100px);
+            /* Adjust for header if necessary */
+        }
+
+        .wip-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .wip-icon {
+            width: 64px;
+            height: 64px;
+            fill: #fff;
+            opacity: 0.8;
+            margin-bottom: 1rem;
+        }
+
+        .wip-message {
+            color: white;
+            font-weight: 300;
+            letter-spacing: 0.15em;
+            text-align: center;
+            font-size: 1.5rem;
+        }
+
+        .wip-submessage {
+            color: #ccc;
+            font-weight: 300;
+            letter-spacing: 0.1em;
+            text-align: center;
+            font-size: 1rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="site-header">
+        <nav class="header-left">
+            <a href="../home.html" class="nav-item">PHOTOGRAPHIES</a>
+            <a href="../work/index.html" class="nav-item active">WORK</a>
+            <a href="../contact/index.html" class="nav-item">CONTACT</a>
+            <a href="../cv/index.html" class="cv-button">CV</a>
+        </nav>
+
+        <div class="header-center">
+            <a href="../home.html" class="site-title">GUSTAVO MARTINEZ</a>
+        </div>
+
+        <div class="header-right">
+            <a href="https://www.instagram.com/gstv.mtz/" class="nav-item">IG</a>
+        </div>
+    </header>
+
+    <main class="wip-main">
+        <div class="wip-container">
+            <!-- Construction/WIP SVG Icon -->
+            <svg class="wip-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M12 2L1 21h22L12 2zm0 3.83L19.5 19H4.5L12 5.83z"></path>
+                <path d="M11 10h2v5h-2zm0 6h2v2h-2z"></path>
+            </svg>
+            <h2 class="wip-message">WORK IN PROGRESS</h2>
+            <p class="wip-submessage">Sorry for the inconvenience. We're currently working on this page.</p>
+        </div>
+    </main>
+
+</body>
+
+</html>

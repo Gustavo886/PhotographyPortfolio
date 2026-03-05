@@ -1,0 +1,50 @@
+/* CV Page Specific Styles */
+
+.cv-main {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+}
+
+.bio-section {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.bio-title {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    letter-spacing: -0.02em;
+    color: #fff;
+    /* Dark Mode */
+}
+
+.bio-content {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #ccc;
+    /* Slightly off-white for reading */
+    font-weight: 300;
+    text-align: justify;
+}
+
+.bio-content p {
+    margin-bottom: 1.5rem;
+}
+
+.home-link {
+    text-decoration: none;
+    color: #111;
+    font-size: 0.9rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    transition: color 0.2s ease;
+}
+
+.home-link:hover {
+    color: #666;
+    text-decoration: underline;
+}

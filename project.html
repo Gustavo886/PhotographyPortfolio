@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gustavo Martinez - Project</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Specific overrides for project page if needed */
+        body {
+            overflow: hidden;
+            /* Lock scroll for full screen experience */
+        }
+
+        .project-container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .project-header {
+            position: absolute;
+            top: 2rem;
+            left: 2rem;
+            z-index: 10;
+        }
+
+        .project-title {
+            font-size: 2rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #fff;
+            margin-bottom: 0.5rem;
+        }
+
+        .back-button {
+            display: inline-block;
+            color: #ccc;
+            text-decoration: none;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            transition: color 0.2s;
+        }
+
+        .back-button:hover {
+            color: #fff;
+        }
+
+        /* Reusing carousel styles but adapting for full page */
+        .carousel-stage {
+            width: 100%;
+            height: calc(100vh - 120px);
+            /* Leave space for thumbnails and title */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding-bottom: 2rem;
+        }
+
+        .carousel-image {
+            max-width: 90%;
+            max-height: calc(100vh - 180px);
+            /* Tighter max-height */
+            object-fit: contain;
+        }
+
+        .nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 2.5rem;
+            cursor: pointer;
+            padding: 2rem;
+            z-index: 20;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+        }
+
+        .nav-btn:hover {
+            opacity: 1;
+        }
+
+        .prev-btn {
+            left: 1rem;
+        }
+
+        .next-btn {
+            right: 1rem;
+        }
+
+        .image-counter {
+            position: absolute;
+            bottom: 2rem;
+            right: 2rem;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .thumbnails-container {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 0.5rem;
+            z-index: 20;
+            max-width: 60%;
+            overflow-x: auto;
+            padding-bottom: 0.5rem;
+        }
+
+        /* Scrollbar styles for thumbnails */
+        .thumbnails-container::-webkit-scrollbar {
+            height: 4px;
+        }
+
+        .thumbnails-container::-webkit-scrollbar-thumb {
+            background-color: #333;
+            border-radius: 4px;
+        }
+
+        .thumbnail {
+            height: 60px;
+            width: auto;
+            cursor: pointer;
+            opacity: 0.4;
+            transition: opacity 0.2s;
+            object-fit: contain;
+        }
+
+        .thumbnail:hover,
+        .thumbnail.active {
+            opacity: 1;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="project-container">
+        <div class="project-header">
+            <a href="home.html" class="back-button">&larr; Back to Gallery</a>
+            <h1 id="project-title" class="project-title">Loading...</h1>
+        </div>
+
+        <button id="prev-btn" class="nav-btn prev-btn">&lt;</button>
+
+        <div class="carousel-stage">
+            <!-- Image will be injected here -->
+            <img id="current-image" class="carousel-image" src="" alt="Project Image">
+        </div>
+
+        <button id="next-btn" class="nav-btn next-btn">&gt;</button>
+
+        <div id="thumbnails-container" class="thumbnails-container"></div>
+
+        <div id="image-counter" class="image-counter"></div>
+    </div>
+
+    <script type="module">
+        import projects from './js/projects.js';
+
+        // Get Project ID from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const projectId = urlParams.get('id');
+
+        const project = projects[projectId];
+
+        // DOM Elements
+        const titleEl = document.getElementById('project-title');
+        const imgEl = document.getElementById('current-image');
+        const counterEl = document.getElementById('image-counter');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const thumbsContainer = document.getElementById('thumbnails-container');
+
+        if (!project) {
+            titleEl.textContent = "Project Not Found";
+            imgEl.style.display = 'none';
+        } else {
+            let currentIndex = 0;
+            const images = project.images;
+            const basePath = `assets/photos/${projectId}/`;
+
+            // Initialize
+            titleEl.textContent = project.title;
+
+            // Build thumbnails
+            images.forEach((imgName, index) => {
+                const img = document.createElement('img');
+                img.src = basePath + imgName;
+                img.classList.add('thumbnail');
+                if (index === 0) img.classList.add('active');
+
+                img.addEventListener('click', () => {
+                    currentIndex = index;
+                    updateImage();
+                });
+
+                thumbsContainer.appendChild(img);
+            });
+
+            updateImage();
+
+            // Navigation functions
+            function updateImage() {
+                const imageName = images[currentIndex];
+                // Check if image is placeholder/missing URL or actual file
+                imgEl.src = basePath + imageName;
+                imgEl.alt = `${project.title} - Image ${currentIndex + 1}`;
+                counterEl.textContent = `${currentIndex + 1} / ${images.length}`;
+
+                // Update active thumbnail
+                const thumbs = thumbsContainer.querySelectorAll('.thumbnail');
+                thumbs.forEach((thumb, idx) => {
+                    if (idx === currentIndex) {
+                        thumb.classList.add('active');
+                        thumb.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+                    } else {
+                        thumb.classList.remove('active');
+                    }
+                });
+            }
+
+            function nextImage() {
+                currentIndex = (currentIndex + 1) % images.length;
+                updateImage();
+            }
+
+            function prevImage() {
+                currentIndex = (currentIndex - 1 + images.length) % images.length;
+                updateImage();
+            }
+
+            // Event Listeners
+            nextBtn.addEventListener('click', nextImage);
+            prevBtn.addEventListener('click', prevImage);
+
+            // Keyboard Nav
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowRight') nextImage();
+                if (e.key === 'ArrowLeft') prevImage();
+                if (e.key === 'Escape') window.location.href = 'home.html';
+            });
+        }
+    </script>
+</body>
+
+</html>
