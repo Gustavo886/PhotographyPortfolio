@@ -83,12 +83,22 @@
             cursor: pointer;
             padding: 2rem;
             z-index: 20;
-            opacity: 0.7;
-            transition: opacity 0.2s;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .project-container:hover .nav-btn {
+            opacity: 0.6;
         }
 
         .nav-btn:hover {
-            opacity: 1;
+            opacity: 1 !important;
+        }
+
+        @media (hover: none) {
+            .nav-btn {
+                opacity: 0.6;
+            }
         }
 
         .prev-btn {
@@ -253,6 +263,52 @@
                 if (e.key === 'ArrowLeft') prevImage();
                 if (e.key === 'Escape') window.location.href = 'home.html';
             });
+
+            // Prevent default image drag to allow robust mouse swiping
+            imgEl.addEventListener('dragstart', (e) => e.preventDefault());
+
+            // Swipe and Mouse Drag Support
+            let startX = 0;
+            let endX = 0;
+            let isDragging = false;
+
+            // Touch events
+            document.addEventListener('touchstart', (e) => {
+                startX = e.changedTouches[0].clientX;
+            }, { passive: true });
+
+            document.addEventListener('touchend', (e) => {
+                endX = e.changedTouches[0].clientX;
+                handleSwipe();
+            }, { passive: true });
+
+            // Mouse events
+            document.addEventListener('mousedown', (e) => {
+                // Ignore clicks on buttons or thumbnails
+                if (e.target.closest('.nav-btn') || e.target.closest('.thumbnail') || e.target.closest('.back-button')) {
+                    return;
+                }
+                isDragging = true;
+                startX = e.clientX;
+            });
+
+            document.addEventListener('mouseup', (e) => {
+                if (!isDragging) return;
+                isDragging = false;
+                endX = e.clientX;
+                handleSwipe();
+            });
+
+            function handleSwipe() {
+                const threshold = 50; // Minimum pixel distance for a swipe
+                const diff = endX - startX;
+
+                if (diff < -threshold) {
+                    nextImage(); // Swiped left
+                } else if (diff > threshold) {
+                    prevImage(); // Swiped right
+                }
+            }
         }
     </script>
 </body>
