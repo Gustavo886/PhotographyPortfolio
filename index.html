@@ -26,7 +26,8 @@
         .splash-container {
             position: relative;
             width: 100%;
-            height: 100vh;
+            height: 100%;
+            height: 100dvh;
             background-image: url('assets/photos/splash.jpg');
             /* Placeholder, user needs to add image */
             background-size: contain;
@@ -46,8 +47,11 @@
 
         .enter-button {
             position: absolute;
-            bottom: 2rem;
+            bottom: 3rem;
+            /* Increase base spacing */
+            bottom: max(3rem, calc(2rem + env(safe-area-inset-bottom)));
             right: 2rem;
+            right: max(2rem, calc(1rem + env(safe-area-inset-right)));
             font-size: 1.2rem;
             color: #fff;
             text-decoration: none;
