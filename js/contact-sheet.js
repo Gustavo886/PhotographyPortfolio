@@ -1,0 +1,236 @@
+/**
+ * Contact Sheet View Module
+ * Renders authentic 35mm film negative strips on a darkroom light table.
+ */
+
+import { projects } from './data.js';
+
+let greasePencilVisible = true;
+
+export function renderContactSheet(container, onSelectFrame, onFrameHover) {
+    container.innerHTML = '';
+
+    // Contact Sheet Control & Info Header
+    const lightTableHeader = document.createElement('div');
+    lightTableHeader.className = 'light-table-header';
+    lightTableHeader.innerHTML = `
+        <div class="light-table-brand">
+            <span class="light-dot"></span>
+            <span class="light-title">DARKROOM LIGHT TABLE • 35MM ARCHIVE</span>
+        </div>
+        <div class="light-table-stats">
+            <span>5 ROLLS</span>
+            <span>•</span>
+            <span>15 FRAMES</span>
+            <span>•</span>
+            <span>TRI-X 400 / HP5+ / T-MAX 3200</span>
+        </div>
+        <div class="light-table-actions">
+            <button id="toggle-chinagraph-btn" class="chinagraph-toggle-btn ${greasePencilVisible ? 'active' : ''}" title="Toggle chinagraph grease-pencil annotations">
+                <span class="btn-indicator"></span>
+                <span class="btn-text">GREASE PENCIL MARKS</span>
+            </button>
+            <span class="loupe-guide-pill">HOVER FOR 2.5X LOUPE</span>
+        </div>
+    `;
+    container.appendChild(lightTableHeader);
+
+    // Light Table Grid of Film Rolls
+    const lightTableSurface = document.createElement('div');
+    lightTableSurface.className = 'light-table-surface';
+
+    projects.forEach((project) => {
+        const rollSection = document.createElement('section');
+        rollSection.className = 'film-roll-section';
+        rollSection.dataset.rollId = project.rollCode;
+
+        // Roll Log / Darkroom Spec Tag
+        rollSection.innerHTML = `
+            <div class="film-roll-header">
+                <div class="roll-tag-group">
+                    <span class="roll-code">${project.rollCode}</span>
+                    <span class="roll-series">${project.title}</span>
+                </div>
+                <div class="roll-specs">
+                    <span class="spec-item"><span class="spec-k">EMULSION:</span> ${project.filmStock}</span>
+                    <span class="spec-item"><span class="spec-k">ISO:</span> ${project.iso}</span>
+                    <span class="spec-item"><span class="spec-k">DEV:</span> ${project.developer}</span>
+                    <span class="spec-item"><span class="spec-k">LOC:</span> ${project.location}</span>
+                </div>
+            </div>
+            <div class="film-strip-wrapper">
+                <div class="film-strip" data-film-stock="${project.filmStock}">
+                    <!-- Top Sprocket Edge -->
+                    <div class="film-edge film-edge-top">
+                        <div class="sprocket-track">
+                            ${generateSprocketTrack(project.filmStock, project.frames.length)}
+                        </div>
+                    </div>
+
+                    <!-- Frames Track -->
+                    <div class="film-frames-track">
+                        ${project.frames.map((frame) => renderFilmFrame(frame, project)).join('')}
+                    </div>
+
+                    <!-- Bottom Sprocket Edge -->
+                    <div class="film-edge film-edge-bottom">
+                        <div class="sprocket-track">
+                            ${generateBottomSprocketTrack(project.filmStock, project.frames)}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        // Wire event listeners on frames
+        rollSection.querySelectorAll('.film-frame').forEach(frameEl => {
+            const frameId = frameEl.dataset.frameId;
+            const foundFrame = project.frames.find(f => f.id === frameId);
+
+            frameEl.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (foundFrame && onSelectFrame) {
+                    onSelectFrame(foundFrame, project);
+                }
+            });
+
+            if (onFrameHover) {
+                frameEl.addEventListener('mouseenter', () => onFrameHover(foundFrame, project, frameEl));
+                frameEl.addEventListener('mouseleave', () => onFrameHover(null, null, null));
+            }
+        });
+
+        lightTableSurface.appendChild(rollSection);
+    });
+
+    container.appendChild(lightTableSurface);
+
+    // Toggle chinagraph grease pencil
+    const toggleBtn = lightTableHeader.querySelector('#toggle-chinagraph-btn');
+    if (toggleBtn) {
+        toggleBtn.addEventListener('click', () => {
+            greasePencilVisible = !greasePencilVisible;
+            toggleBtn.classList.toggle('active', greasePencilVisible);
+            lightTableSurface.classList.toggle('hide-chinagraph', !greasePencilVisible);
+        });
+    }
+}
+
+function renderFilmFrame(frame, project) {
+    const isHero = frame.selected;
+    const chinagraph = frame.chinagraph;
+
+    return `
+        <div class="film-frame ${isHero ? 'is-hero' : ''}" data-frame-id="${frame.id}" data-frame-num="${frame.frameNum}">
+            <div class="frame-negative-window">
+                <img 
+                    src="${frame.src}" 
+                    alt="${frame.title}" 
+                    class="negative-image" 
+                    loading="lazy"
+                    data-zoom-src="${frame.src}"
+                />
+                
+                <!-- Authentic Grease Pencil Overlay -->
+                ${renderChinagraphOverlay(chinagraph, frame)}
+
+                <div class="frame-hover-hud">
+                    <span class="hud-frame-num">FRAME ${frame.frameNum}</span>
+                    <span class="hud-title">${frame.title}</span>
+                    <span class="hud-exif">${frame.lens} • ${frame.exposure}</span>
+                </div>
+            </div>
+            <div class="frame-footer-rebate">
+                <span class="rebate-arrow">▶</span>
+                <span class="rebate-num">${frame.frameNum}</span>
+                <span class="rebate-brand">${project.filmStock.includes('TRI-X') ? 'TX-400' : 'HP5+'}</span>
+                <span class="rebate-arrow-a">▶</span>
+                <span class="rebate-num-a">${frame.frameNum}A</span>
+            </div>
+        </div>
+    `;
+}
+
+function renderChinagraphOverlay(chinagraph, frame) {
+    if (!chinagraph) return '';
+
+    let content = '';
+    const colorClass = chinagraph.color === 'red' ? 'chinagraph-red' : 'chinagraph-yellow';
+
+    if (chinagraph.type === 'crop') {
+        const box = chinagraph.cropBox || { top: 6, left: 6, width: 88, height: 88 };
+        content = `
+            <svg class="chinagraph-svg ${colorClass}" viewBox="0 0 100 100" preserveAspectRatio="none">
+                <!-- Grease pencil hand-drawn crop box -->
+                <rect 
+                    x="${box.left}" 
+                    y="${box.top}" 
+                    width="${box.width}" 
+                    height="${box.height}" 
+                    class="crop-stroke"
+                />
+                <!-- Corner ticks -->
+                <line x1="${box.left - 2}" y1="${box.top}" x2="${box.left + 8}" y2="${box.top}" class="corner-tick"/>
+                <line x1="${box.left}" y1="${box.top - 2}" x2="${box.left}" y2="${box.top + 8}" class="corner-tick"/>
+                <line x1="${box.left + box.width - 8}" y1="${box.top + box.height}" x2="${box.left + box.width + 2}" y2="${box.top + box.height}" class="corner-tick"/>
+                <line x1="${box.left + box.width}" y1="${box.top + box.height - 8}" x2="${box.left + box.width}" y2="${box.top + box.height + 2}" class="corner-tick"/>
+            </svg>
+            ${chinagraph.annotation ? `<span class="chinagraph-tag ${colorClass}">${chinagraph.annotation}</span>` : ''}
+        `;
+    } else if (chinagraph.type === 'circle') {
+        const c = chinagraph.circle || { cx: 50, cy: 50, r: 40 };
+        content = `
+            <svg class="chinagraph-svg ${colorClass}" viewBox="0 0 100 100">
+                <ellipse 
+                    cx="${c.cx}" 
+                    cy="${c.cy}" 
+                    rx="${c.r}" 
+                    ry="${c.r * 0.9}" 
+                    transform="rotate(-4 50 50)" 
+                    class="circle-stroke"
+                />
+            </svg>
+            ${chinagraph.annotation ? `<span class="chinagraph-tag ${colorClass}">${chinagraph.annotation}</span>` : ''}
+        `;
+    } else {
+        content = `
+            <span class="chinagraph-tag ${colorClass} chinagraph-standalone">${chinagraph.annotation || '★'}</span>
+        `;
+    }
+
+    return `<div class="chinagraph-layer">${content}</div>`;
+}
+
+function generateSprocketTrack(filmStock, count) {
+    const totalSprockets = count * 8; // ~8 sprockets per 35mm frame
+    let html = '';
+    const brandName = filmStock.includes('TRI-X') ? 'KODAK SAFETY FILM 5063' : 'ILFORD HP5 PLUS SAFETY';
+    
+    for (let i = 0; i < totalSprockets; i++) {
+        html += `<div class="sprocket-hole"></div>`;
+        if (i % 6 === 2) {
+            html += `<span class="film-edge-text">${brandName}</span>`;
+        }
+        if (i % 8 === 4) {
+            html += `<span class="film-dx-code">|||| | | |||</span>`;
+        }
+    }
+    return html;
+}
+
+function generateBottomSprocketTrack(filmStock, frames) {
+    const totalSprockets = frames.length * 8;
+    let html = '';
+
+    for (let i = 0; i < totalSprockets; i++) {
+        html += `<div class="sprocket-hole"></div>`;
+        const frameIndex = Math.floor(i / 8);
+        const subIndex = i % 8;
+        if (frames[frameIndex] && subIndex === 3) {
+            html += `<span class="film-edge-counter">▶ ${frames[frameIndex].frameNum}</span>`;
+        } else if (frames[frameIndex] && subIndex === 7) {
+            html += `<span class="film-edge-counter">▶ ${frames[frameIndex].frameNum}A</span>`;
+        }
+    }
+    return html;
+}

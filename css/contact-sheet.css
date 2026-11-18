@@ -1,0 +1,523 @@
+/* ==========================================================================
+   Contact Sheet View Styling (35mm Darkroom Light Table)
+   ========================================================================== */
+
+/* Darkroom Light Table Toolbar */
+.light-table-header {
+    position: sticky;
+    top: 65px;
+    z-index: 75;
+    background: rgba(8, 9, 13, 0.94);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-dim);
+    padding: 0.9rem 2.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.light-table-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.light-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #ffb703;
+    box-shadow: 0 0 10px #ffb703;
+}
+
+.light-title {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    color: var(--text-pure);
+    font-weight: 600;
+}
+
+.light-table-stats {
+    display: flex;
+    gap: 0.8rem;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    letter-spacing: 0.08em;
+}
+
+.light-table-actions {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+}
+
+.chinagraph-toggle-btn {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid var(--border-dim);
+    color: var(--text-muted);
+    padding: 0.4rem 0.85rem;
+    border-radius: 4px;
+    font-size: 0.74rem;
+    font-family: var(--font-mono);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.chinagraph-toggle-btn:hover {
+    background: rgba(255, 255, 255, 0.12);
+    color: var(--text-pure);
+}
+
+.chinagraph-toggle-btn.active {
+    background: rgba(230, 57, 70, 0.15);
+    border-color: rgba(230, 57, 70, 0.4);
+    color: #fff;
+}
+
+.chinagraph-toggle-btn .btn-indicator {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #666;
+}
+
+.chinagraph-toggle-btn.active .btn-indicator {
+    background: var(--chinagraph-red);
+    box-shadow: 0 0 8px var(--chinagraph-red);
+}
+
+.loupe-guide-pill {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--text-subtle);
+    background: rgba(255, 255, 255, 0.04);
+    padding: 0.3rem 0.6rem;
+    border-radius: 3px;
+    border: 1px dashed rgba(255, 255, 255, 0.1);
+}
+
+/* ==========================================================================
+   Light Table Surface & Film Rolls
+   ========================================================================== */
+
+.light-table-surface {
+    width: 100%;
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 3.5rem 2.5rem 6rem;
+    display: flex;
+    flex-direction: column;
+    gap: 4.5rem;
+    background: radial-gradient(ellipse at 50% 30%, rgba(255, 255, 255, 0.02) 0%, transparent 80%);
+}
+
+.film-roll-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+/* Roll Provenance Log Tag */
+.film-roll-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding-bottom: 0.6rem;
+    border-bottom: 1px solid var(--border-dim);
+}
+
+.roll-tag-group {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+}
+
+.roll-code {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--chinagraph-yellow);
+    letter-spacing: 0.1em;
+}
+
+.roll-series {
+    font-family: var(--font-sans);
+    font-size: 1.15rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.roll-specs {
+    display: flex;
+    gap: 1.2rem;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--text-muted);
+}
+
+.spec-k {
+    color: var(--text-subtle);
+}
+
+/* ==========================================================================
+   35mm Film Strip & Sprockets
+   ========================================================================== */
+
+.film-strip-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 0.8rem;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255,255,255,0.15) transparent;
+}
+
+.film-strip {
+    display: inline-flex;
+    flex-direction: column;
+    background: #030303;
+    border-radius: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.8);
+    position: relative;
+    user-select: none;
+}
+
+/* Sprocket Edge Tracks */
+.film-edge {
+    height: 38px;
+    background: #050505;
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 0 1rem;
+    overflow: hidden;
+}
+
+.film-edge-top {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.film-edge-bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.sprocket-track {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+}
+
+.sprocket-hole {
+    width: 16px;
+    height: 24px;
+    background: #0d0f14;
+    border-radius: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.9);
+    flex-shrink: 0;
+}
+
+.film-edge-text {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: var(--film-amber);
+    opacity: 0.7;
+    white-space: nowrap;
+    letter-spacing: 0.15em;
+    flex-shrink: 0;
+}
+
+.film-dx-code {
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    color: rgba(255, 255, 255, 0.3);
+    letter-spacing: 1px;
+    flex-shrink: 0;
+}
+
+.film-edge-counter {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--film-amber);
+    opacity: 0.8;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+/* Frames Track */
+.film-frames-track {
+    display: flex;
+    gap: 14px;
+    padding: 10px 14px;
+    background: #020202;
+}
+
+/* Individual 35mm Frame Negative */
+.film-frame {
+    position: relative;
+    width: 320px;
+    cursor: crosshair;
+    display: flex;
+    flex-direction: column;
+    background: #000;
+    transition: transform 0.2s var(--ease-out-expo);
+    scroll-snap-align: center;
+    scroll-margin: 1rem;
+}
+
+.film-frame.is-hero {
+    /* Subtle glow for curated hero shots */
+    box-shadow: 0 0 0 1px rgba(230, 57, 70, 0.35);
+}
+
+.frame-negative-window {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 3 / 2;
+    overflow: hidden;
+    background: #080808;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.negative-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: contrast(105%) grayscale(100%);
+    transition: filter 0.3s ease;
+}
+
+.film-frame:hover .negative-image {
+    filter: contrast(115%) grayscale(0%);
+}
+
+/* Frame Hover HUD */
+.frame-hover-hud {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 0.8rem;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 20%, transparent);
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    opacity: 0;
+    transform: translateY(4px);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    pointer-events: none;
+    z-index: 5;
+}
+
+.film-frame:hover .frame-hover-hud {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.hud-frame-num {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: var(--chinagraph-yellow);
+    letter-spacing: 0.1em;
+}
+
+.hud-title {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.hud-exif {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    color: var(--text-muted);
+}
+
+/* Frame Bottom Rebate Line */
+.frame-footer-rebate {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.3rem 0.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: var(--film-amber);
+    opacity: 0.75;
+}
+
+.rebate-arrow, .rebate-arrow-a {
+    font-size: 0.5rem;
+}
+
+.rebate-brand {
+    font-size: 0.6rem;
+    color: rgba(255, 255, 255, 0.35);
+}
+
+/* ==========================================================================
+   Authentic Chinagraph Grease Pencil Markings
+   ========================================================================== */
+
+.chinagraph-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 3;
+    transition: opacity 0.25s ease;
+}
+
+.light-table-surface.hide-chinagraph .chinagraph-layer {
+    opacity: 0 !important;
+}
+
+.chinagraph-svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+}
+
+.crop-stroke {
+    fill: none;
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 400;
+    animation: chinagraphDraw 0.6s var(--ease-out-expo) forwards;
+}
+
+.corner-tick {
+    stroke-width: 2.2;
+    stroke-linecap: round;
+}
+
+.circle-stroke {
+    fill: none;
+    stroke-width: 2.6;
+    stroke-linecap: round;
+    stroke-dasharray: 350;
+    animation: chinagraphDraw 0.5s var(--ease-out-expo) forwards;
+}
+
+@keyframes chinagraphDraw {
+    from { stroke-dashoffset: 400; }
+    to { stroke-dashoffset: 0; }
+}
+
+.chinagraph-red .crop-stroke,
+.chinagraph-red .corner-tick,
+.chinagraph-red .circle-stroke {
+    stroke: var(--chinagraph-red);
+    filter: drop-shadow(0 0 2px rgba(230, 57, 70, 0.8));
+}
+
+.chinagraph-yellow .crop-stroke,
+.chinagraph-yellow .corner-tick,
+.chinagraph-yellow .circle-stroke {
+    stroke: var(--chinagraph-yellow);
+    filter: drop-shadow(0 0 2px rgba(255, 183, 3, 0.8));
+}
+
+.chinagraph-tag {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 0.68rem;
+    padding: 0.15rem 0.45rem;
+    border-radius: 2px;
+    letter-spacing: 0.08em;
+    user-select: none;
+}
+
+.chinagraph-tag.chinagraph-red {
+    background: var(--chinagraph-red);
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(230, 57, 70, 0.6);
+}
+
+.chinagraph-tag.chinagraph-yellow {
+    background: var(--chinagraph-yellow);
+    color: #000;
+    box-shadow: 0 2px 8px rgba(255, 183, 3, 0.6);
+}
+
+.chinagraph-standalone {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-12deg);
+    font-size: 1.1rem;
+    padding: 0.3rem 0.8rem;
+}
+
+/* Mobile Adjustments */
+@media (max-width: 768px) {
+    .light-table-header {
+        position: sticky;
+        top: 76px; /* Sits cleanly beneath the 2-row mobile site header */
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.75rem 1rem;
+    }
+    .light-table-brand {
+        gap: 0.4rem;
+    }
+    .light-title {
+        font-size: 0.7rem;
+        letter-spacing: 0.08em;
+    }
+    .light-table-stats {
+        display: none;
+    }
+    .loupe-guide-pill {
+        display: none; /* Mouse hover does not exist on touchscreens */
+    }
+    .chinagraph-toggle-btn {
+        padding: 0.35rem 0.65rem;
+        font-size: 0.68rem;
+    }
+    .light-table-surface {
+        padding: 1.8rem 0.9rem 4rem;
+        gap: 2.8rem;
+    }
+    .film-roll-header {
+        flex-direction: column;
+        gap: 0.4rem;
+        align-items: flex-start;
+    }
+    .roll-series {
+        font-size: 1.05rem;
+    }
+    .roll-specs {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.6rem;
+        font-size: 0.66rem;
+    }
+    .film-frame {
+        width: 270px; /* Shows full frame with peek of next frame */
+    }
+    .film-frames-track {
+        gap: 12px;
+        padding: 8px 10px;
+    }
+}

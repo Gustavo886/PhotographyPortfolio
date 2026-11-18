@@ -1,0 +1,375 @@
+/* ==========================================================================
+   Monograph View Styling (Bruce Gilden Purity & Cadence)
+   ========================================================================== */
+
+.monograph-hero {
+    position: relative;
+    width: 100%;
+    min-height: 82vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 4rem 2rem;
+    overflow: hidden;
+    border-bottom: 1px solid var(--border-dim);
+}
+
+.hero-watermark {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: var(--font-display);
+    font-size: clamp(3.5rem, 13vw, 15rem);
+    font-weight: 800;
+    color: rgba(255, 255, 255, 0.035);
+    white-space: nowrap;
+    letter-spacing: 0.08em;
+    pointer-events: none;
+    z-index: 1;
+    user-select: none;
+}
+
+.hero-slideshow-container {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 980px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.hero-slide {
+    width: 100%;
+    max-height: 64vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hero-img {
+    max-width: 100%;
+    max-height: 64vh;
+    object-fit: contain;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.85);
+    filter: contrast(108%) brightness(98%);
+}
+
+.hero-caption-wrap {
+    margin-top: 2.5rem;
+    text-align: center;
+}
+
+.hero-label {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--text-subtle);
+    letter-spacing: 0.2em;
+    display: block;
+    margin-bottom: 0.6rem;
+}
+
+.hero-headline {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4.5vw, 3.8rem);
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    line-height: 1.1;
+    margin-bottom: 0.6rem;
+}
+
+.hero-subtext {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    letter-spacing: 0.12em;
+}
+
+/* ==========================================================================
+   Monograph Stream Layout
+   ========================================================================== */
+
+.monograph-stream {
+    width: 100%;
+    max-width: 1540px;
+    margin: 0 auto;
+    padding: 6rem 2.5rem 8rem;
+}
+
+/* Base Project Article */
+.monograph-project {
+    position: relative;
+    margin-bottom: 15rem; /* Generous art-book vertical breathing space */
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s var(--ease-out-expo), transform 0.8s var(--ease-out-expo);
+}
+
+.monograph-project.in-view {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.project-plate-wrap {
+    display: flex;
+    flex-direction: column;
+    max-width: 860px;
+}
+
+/* Asymmetrical Orientations replicating Gilden's layout */
+.monograph-left .project-plate-wrap {
+    margin-left: 2rem;
+    margin-right: auto;
+}
+
+.monograph-right .project-plate-wrap {
+    margin-left: auto;
+    margin-right: 2rem;
+}
+
+.monograph-center .project-plate-wrap {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 960px;
+}
+
+/* Project Image Container */
+.project-img-container {
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+    background-color: #000;
+}
+
+.project-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+    filter: contrast(106%) grayscale(100%);
+    transition: filter 0.4s ease, transform 0.6s var(--ease-out-expo);
+}
+
+.project-img-container:hover .project-img {
+    filter: contrast(110%) grayscale(0%); /* Subtle twist: reveals true tone on hover */
+}
+
+.project-img-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 1rem 1.2rem;
+    background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+}
+
+.project-img-container:hover .project-img-overlay {
+    opacity: 1;
+}
+
+.overlay-badge {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: #fff;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 0.2rem 0.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    letter-spacing: 0.1em;
+}
+
+.overlay-loupe-hint {
+    font-size: 0.72rem;
+    color: #ccc;
+    letter-spacing: 0.08em;
+    font-weight: 500;
+}
+
+/* Project Meta Typography */
+.project-meta-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-top: 1.4rem;
+    padding-bottom: 0.8rem;
+    border-bottom: 1px solid var(--border-dim);
+}
+
+.meta-left {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.project-title {
+    font-family: var(--font-sans);
+    font-size: 1.35rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-pure);
+    text-decoration: underline;
+    text-underline-offset: 6px;
+    text-decoration-thickness: 1.5px;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.project-title:hover {
+    opacity: 0.75;
+}
+
+.project-subtitle {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    letter-spacing: 0.04em;
+}
+
+.meta-right {
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.meta-roll {
+    font-family: var(--font-mono);
+    font-size: 0.76rem;
+    color: var(--text-high);
+    letter-spacing: 0.1em;
+}
+
+.meta-location {
+    font-size: 0.76rem;
+    color: var(--text-subtle);
+    letter-spacing: 0.04em;
+}
+
+.project-desc {
+    margin-top: 1rem;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--text-muted);
+    max-width: 680px;
+}
+
+/* Secondary Frames Strip */
+.project-secondary-frames {
+    display: flex;
+    gap: 0.8rem;
+    margin-top: 1.4rem;
+}
+
+.mini-frame {
+    position: relative;
+    width: 90px;
+    height: 60px;
+    cursor: pointer;
+    overflow: hidden;
+    border: 1px solid var(--border-dim);
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.mini-frame:hover {
+    transform: scale(1.04);
+    border-color: var(--border-medium);
+}
+
+.mini-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(100%);
+}
+
+.mini-frame:hover img {
+    filter: grayscale(0%);
+}
+
+.mini-frame-num {
+    position: absolute;
+    bottom: 2px;
+    right: 4px;
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    color: #fff;
+    background: rgba(0, 0, 0, 0.75);
+    padding: 0.05rem 0.25rem;
+}
+
+/* ==========================================================================
+   Editorial Pull Quotes (Bruce Gilden Ethos)
+   ========================================================================== */
+
+.monograph-quote-divider {
+    position: relative;
+    width: 100%;
+    max-width: 1080px;
+    margin: 12rem auto 15rem;
+    padding: 4rem 2rem;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s var(--ease-out-expo), transform 0.8s var(--ease-out-expo);
+}
+
+.monograph-quote-divider.in-view {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.quote-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.8rem;
+}
+
+.quote-text {
+    font-family: var(--font-display);
+    font-size: clamp(1.8rem, 3.8vw, 3.2rem);
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+    color: var(--text-pure);
+    max-width: 920px;
+}
+
+.quote-author {
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    letter-spacing: 0.25em;
+    color: var(--text-subtle);
+    font-style: normal;
+}
+
+/* Mobile Adjustments */
+@media (max-width: 768px) {
+    .monograph-stream {
+        padding: 3rem 1.2rem 6rem;
+    }
+    .monograph-project {
+        margin-bottom: 8rem;
+    }
+    .monograph-left .project-plate-wrap,
+    .monograph-right .project-plate-wrap {
+        margin-left: 0;
+        margin-right: 0;
+    }
+    .monograph-quote-divider {
+        margin: 6rem auto 8rem;
+        padding: 2rem 1rem;
+    }
+    .project-meta-row {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    .meta-right {
+        text-align: left;
+    }
+}

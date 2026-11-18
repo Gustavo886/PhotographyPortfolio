@@ -1,0 +1,439 @@
+/* ==========================================================================
+   Optical Loupe Magnifier & Lightbox Inspector Styling
+   ========================================================================== */
+
+/* Darkroom Optical Loupe Element */
+.darkroom-loupe {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 200px;
+    height: 200px;
+    margin-top: -100px;
+    margin-left: -100px;
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(0.85);
+    transition: opacity 0.2s ease, visibility 0.2s ease, transform 0.25s var(--ease-out-expo);
+    will-change: transform;
+}
+
+.darkroom-loupe.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: scale(1);
+}
+
+.loupe-barrel {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    position: relative;
+    box-shadow: 
+        0 15px 35px rgba(0, 0, 0, 0.9),
+        0 0 0 1px rgba(255, 255, 255, 0.15),
+        inset 0 0 10px rgba(0, 0, 0, 0.9);
+}
+
+/* Metal Knurled Outer Ring */
+.loupe-knurl {
+    position: absolute;
+    top: -6px;
+    left: -6px;
+    right: -6px;
+    bottom: -6px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, #333 0%, #151515 70%, #050505 100%);
+    border: 2px solid #444;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.7);
+    z-index: 1;
+}
+
+/* Magnifying Glass Element */
+.loupe-glass {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    overflow: hidden;
+    background-repeat: no-repeat;
+    background-color: #000;
+    z-index: 2;
+    box-shadow: inset 0 0 25px rgba(0, 0, 0, 0.8);
+}
+
+/* Crosshair Hairline Reticle */
+.loupe-crosshair {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.loupe-crosshair::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 10%;
+    right: 10%;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+.loupe-crosshair::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 10%;
+    bottom: 10%;
+    width: 1px;
+    background: rgba(255, 255, 255, 0.25);
+    box-shadow: 1px 0 2px rgba(0, 0, 0, 0.8);
+}
+
+/* Optical Reflection Arcs */
+.loupe-reflection {
+    position: absolute;
+    top: 8%;
+    left: 12%;
+    width: 45%;
+    height: 45%;
+    border-radius: 50%;
+    border-top: 2px solid rgba(255, 255, 255, 0.4);
+    border-left: 2px solid rgba(255, 255, 255, 0.15);
+    filter: blur(1px);
+    pointer-events: none;
+}
+
+.loupe-reflection-secondary {
+    position: absolute;
+    bottom: 12%;
+    right: 14%;
+    width: 25%;
+    height: 25%;
+    border-radius: 50%;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    filter: blur(1px);
+    pointer-events: none;
+}
+
+.loupe-badge {
+    position: absolute;
+    bottom: -24px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    color: #ffb703;
+    background: rgba(0, 0, 0, 0.85);
+    padding: 0.15rem 0.5rem;
+    border-radius: 3px;
+    border: 1px solid rgba(255, 183, 3, 0.3);
+    white-space: nowrap;
+    letter-spacing: 0.1em;
+    z-index: 3;
+}
+
+/* ==========================================================================
+   Full-Bleed Darkroom Lightbox Modal
+   ========================================================================== */
+
+.darkroom-lightbox {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s var(--ease-out-expo), visibility 0.3s var(--ease-out-expo);
+}
+
+.darkroom-lightbox.is-open {
+    opacity: 1;
+    visibility: visible;
+}
+
+.lightbox-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(3, 3, 4, 0.96);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+}
+
+.lightbox-container {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 1.5rem 2.5rem;
+}
+
+/* Top Utility Bar */
+.lightbox-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-dim);
+}
+
+.lightbox-breadcrumbs {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+}
+
+.lb-roll {
+    color: var(--chinagraph-yellow);
+    font-weight: 700;
+}
+
+.lb-sep {
+    color: var(--text-subtle);
+}
+
+.lb-series {
+    color: var(--text-pure);
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.lb-frame-tag {
+    color: var(--text-muted);
+}
+
+.lightbox-actions {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.lightbox-counter {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--text-subtle);
+    letter-spacing: 0.1em;
+}
+
+.lb-close-btn {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid var(--border-dim);
+    color: var(--text-pure);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.lb-close-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.05);
+}
+
+/* Stage & Main Image */
+.lightbox-stage {
+    position: relative;
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1.5rem 0;
+    overflow: hidden;
+}
+
+.lightbox-image-wrap {
+    position: relative;
+    max-width: 90vw;
+    max-height: 70vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.lightbox-main-img {
+    max-width: 100%;
+    max-height: 70vh;
+    object-fit: contain;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.95);
+    filter: contrast(108%);
+    transition: opacity 0.2s ease;
+}
+
+.lb-nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(15, 15, 18, 0.75);
+    border: 1px solid var(--border-dim);
+    color: #fff;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+    transition: all 0.2s ease;
+    backdrop-filter: blur(8px);
+}
+
+.lb-nav-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-50%) scale(1.06);
+}
+
+.lb-prev-btn { left: 1rem; }
+.lb-next-btn { right: 1rem; }
+
+/* Bottom Metadata Drawer */
+.lightbox-footer {
+    display: grid;
+    grid-template-columns: 1.4fr 2fr;
+    gap: 3rem;
+    padding-top: 1.2rem;
+    border-top: 1px solid var(--border-dim);
+}
+
+.footer-meta-primary {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+.lb-title {
+    font-family: var(--font-sans);
+    font-size: 1.25rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #fff;
+}
+
+.lb-caption {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+}
+
+.footer-meta-technical {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.2rem;
+}
+
+.tech-spec {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.tech-label {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: var(--text-subtle);
+    letter-spacing: 0.12em;
+}
+
+.tech-val {
+    font-family: var(--font-mono);
+    font-size: 0.76rem;
+    color: var(--text-high);
+}
+
+/* Mobile Adjustments */
+@media (max-width: 860px) {
+    .darkroom-lightbox {
+        width: 100vw;
+        max-width: 100vw;
+        overflow-x: hidden;
+    }
+    .lightbox-container {
+        padding: 0.9rem 0.8rem;
+        box-sizing: border-box;
+        width: 100%;
+        max-width: 100vw;
+    }
+    .lightbox-header {
+        padding-bottom: 0.6rem;
+    }
+    .lightbox-breadcrumbs {
+        font-size: 0.72rem;
+        gap: 0.4rem;
+    }
+    .lb-close-btn {
+        width: 44px;
+        height: 44px; /* Optimal touch target */
+    }
+    .lightbox-stage {
+        padding: 0.4rem 0;
+        flex: 1;
+        max-height: 52vh;
+    }
+    .lightbox-image-wrap {
+        max-width: 95vw;
+        max-height: 50vh;
+    }
+    .lightbox-main-img {
+        max-height: 50vh;
+        max-width: 95vw;
+    }
+    .lightbox-footer {
+        grid-template-columns: 1fr;
+        gap: 0.8rem;
+        padding-top: 0.8rem;
+        max-height: 38vh;
+        overflow-y: auto;
+    }
+    .lb-title {
+        font-size: 1.05rem;
+    }
+    .lb-caption {
+        font-size: 0.78rem;
+    }
+    .footer-meta-technical {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.6rem;
+    }
+    .tech-label {
+        font-size: 0.58rem;
+    }
+    .tech-val {
+        font-size: 0.72rem;
+        word-break: break-word;
+    }
+    .lb-nav-btn {
+        width: 44px;
+        height: 44px;
+    }
+    .lb-prev-btn { left: 0.3rem; }
+    .lb-next-btn { right: 0.3rem; }
+    .darkroom-loupe {
+        display: none; /* Optical loupe disabled on tiny screens, tap opens lightbox */
+    }
+}

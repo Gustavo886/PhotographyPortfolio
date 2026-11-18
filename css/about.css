@@ -1,0 +1,251 @@
+/* ==========================================================================
+   About Section Styling (Monograph Aesthetic & Alternating 3-Photo Layout)
+   ========================================================================== */
+
+.about-page-header {
+    position: relative;
+    width: 100%;
+    padding: 7rem 2.5rem 5rem;
+    text-align: center;
+    border-bottom: 1px solid var(--border-dim);
+    overflow: hidden;
+}
+
+.about-watermark {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: var(--font-display);
+    font-size: clamp(4rem, 14vw, 16rem);
+    font-weight: 800;
+    color: rgba(255, 255, 255, 0.03);
+    white-space: nowrap;
+    letter-spacing: 0.08em;
+    pointer-events: none;
+    z-index: 1;
+    user-select: none;
+}
+
+.about-header-content {
+    position: relative;
+    z-index: 2;
+    max-width: 820px;
+    margin: 0 auto;
+}
+
+.about-tagline {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--chinagraph-yellow);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 1rem;
+}
+
+.about-headline {
+    font-family: var(--font-display);
+    font-size: clamp(2.4rem, 5.5vw, 4.2rem);
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    line-height: 1.1;
+    margin-bottom: 1.2rem;
+}
+
+.about-lead {
+    font-size: 1.05rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    letter-spacing: 0.02em;
+}
+
+/* ==========================================================================
+   The 3-Photo Alternating Monograph Section
+   ========================================================================== */
+
+.about-monograph-container {
+    width: 100%;
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 7rem 2.5rem 10rem;
+    display: flex;
+    flex-direction: column;
+    gap: 14rem; /* Generous Bruce Gilden vertical spacing */
+}
+
+/* Each Triptych Row */
+.about-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: center;
+    position: relative;
+}
+
+/* Alternating Alignment */
+/* Row 1 & 3: Photo on Left, Text on Right (Default Grid) */
+.about-row.layout-photo-left {
+    grid-template-columns: 1.15fr 1fr;
+}
+
+/* Row 2: Text on Left, Photo on Right (Reversed Grid) */
+.about-row.layout-photo-right {
+    grid-template-columns: 1fr 1.15fr;
+}
+
+.about-row.layout-photo-right .about-photo-col {
+    order: 2;
+}
+
+.about-row.layout-photo-right .about-text-col {
+    order: 1;
+}
+
+/* Photo Column */
+.about-photo-col {
+    position: relative;
+}
+
+.about-img-frame {
+    position: relative;
+    background: #000;
+    overflow: hidden;
+    border: 1px solid var(--border-dim);
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.85);
+}
+
+.about-img {
+    width: 100%;
+    height: auto;
+    max-height: 75vh;
+    object-fit: cover;
+    display: block;
+    filter: contrast(108%) grayscale(100%);
+    transition: filter 0.5s ease, transform 0.6s var(--ease-out-expo);
+}
+
+.about-img-frame:hover .about-img {
+    filter: contrast(112%) grayscale(0%);
+    transform: scale(1.02);
+}
+
+.about-img-badge {
+    position: absolute;
+    bottom: 1rem;
+    left: 1rem;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: #fff;
+    background: rgba(0, 0, 0, 0.8);
+    padding: 0.25rem 0.6rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    letter-spacing: 0.1em;
+}
+
+/* Text Column */
+.about-text-col {
+    display: flex;
+    flex-direction: column;
+    gap: 1.6rem;
+    max-width: 540px;
+}
+
+.about-num {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--chinagraph-yellow);
+    letter-spacing: 0.15em;
+    font-weight: 700;
+}
+
+.about-section-title {
+    font-family: var(--font-sans);
+    font-size: clamp(1.6rem, 2.8vw, 2.4rem);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    line-height: 1.2;
+    color: var(--text-pure);
+}
+
+.about-quote {
+    font-family: var(--font-display);
+    font-size: 1.35rem;
+    font-weight: 700;
+    line-height: 1.35;
+    color: var(--text-high);
+    border-left: 2px solid var(--chinagraph-red);
+    padding-left: 1.2rem;
+    margin: 0.4rem 0;
+}
+
+.about-quote-author {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--text-subtle);
+    letter-spacing: 0.15em;
+    margin-top: 0.5rem;
+    font-style: normal;
+}
+
+.about-body {
+    font-size: 0.96rem;
+    line-height: 1.7;
+    color: var(--text-muted);
+}
+
+.about-spec-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-top: 1rem;
+    padding-top: 1.4rem;
+    border-top: 1px solid var(--border-dim);
+}
+
+.about-spec-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.about-spec-label {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    color: var(--text-subtle);
+    letter-spacing: 0.1em;
+}
+
+.about-spec-val {
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    color: var(--text-high);
+}
+
+/* Responsive Rules for Mobile/Tablet */
+@media (max-width: 960px) {
+    .about-page-header {
+        padding: 3.5rem 1.2rem 2.5rem;
+    }
+    .about-monograph-container {
+        padding: 3rem 1.2rem 5rem;
+        gap: 4.5rem; /* Balanced, comfortable breathing room on mobile */
+    }
+    .about-row,
+    .about-row.layout-photo-left,
+    .about-row.layout-photo-right {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    .about-row.layout-photo-right .about-photo-col {
+        order: 1; /* Always stack photo first on mobile */
+    }
+    .about-row.layout-photo-right .about-text-col {
+        order: 2;
+    }
+    .about-img {
+        max-height: 50vh;
+    }
+}

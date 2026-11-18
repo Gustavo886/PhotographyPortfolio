@@ -1,78 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gustavo Martinez - Portfolio</title>
+    <title>GUSTAVO MARTINEZ — 35MM WORK & CONTACT SHEETS</title>
+    <meta name="description" content="Documentary and street photography archive of Gustavo Martinez. Interactive 35mm darkroom contact sheet light table featuring uncut film rolls and grease-pencil notes.">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="GUSTAVO MARTINEZ — 35MM WORK & CONTACT SHEETS">
+    <meta property="og:description" content="Interactive 35mm darkroom contact sheet archive.">
+    <meta property="og:type" content="website">
+    
+    <!-- Google Fonts: Syne, Inter, Courier Prime -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
 
-        body,
-        html {
-            height: 100%;
-            overflow: hidden;
-            font-family: 'Inter', sans-serif;
-            background-color: #000;
-        }
-
-        .splash-container {
-            position: relative;
-            width: 100%;
-            height: 100vh;
-            background-image: url('assets/photos/splash.jpg');
-            /* Placeholder, user needs to add image */
-            background-size: contain;
-            background-position: center;
-            background-repeat: no-repeat;
-        }
-
-        /* Overlay to ensure text visibility if needed, or just for mood */
-        .overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.1);
-        }
-
-        .enter-button {
-            position: absolute;
-            bottom: 8rem;
-            right: 8rem;
-            font-size: 1.2rem;
-            color: #fff;
-            text-decoration: none;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            font-weight: 500;
-            transition: opacity 0.3s ease;
-            z-index: 10;
-        }
-
-        .enter-button:hover {
-            opacity: 0.7;
-        }
-    </style>
+    <!-- CSS Modules -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/contact-sheet.css">
+    <link rel="stylesheet" href="css/loupe.css">
 </head>
+<body class="view-contact-sheet">
 
-<body>
+    <!-- Silver-Gelatin Analog Noise Grain -->
+    <div class="film-grain-canvas" aria-hidden="true"></div>
 
-    <div class="splash-container">
-        <!-- Placeholder for the splash image. 
-             Ideally, the user should place a 'splash.jpg' in 'assets/photos/' 
-             or we can use a generated placeholder if needed. -->
-        <a href="home.html" class="enter-button">Enter ></a>
-    </div>
+    <!-- Site Header: Bruce Gilden 3-Part Architecture -->
+    <header class="site-header">
+        <nav class="header-left" aria-label="Primary Navigation">
+            <a href="index.html" class="nav-link active">WORK</a>
+            <a href="about.html" class="nav-link">ABOUT</a>
+            <a href="https://www.instagram.com/gstv.mtz/" target="_blank" rel="noopener" class="nav-link">INSTAGRAM</a>
+        </nav>
 
+        <div class="header-center">
+            <a href="index.html" class="site-logo">GUSTAVO MARTINEZ</a>
+        </div>
+
+        <div class="header-right">
+            <button id="audio-toggle-btn" class="audio-toggle-btn" title="Toggle tactile darkroom acoustic feedback (S)" aria-pressed="false">
+                <span class="sound-indicator"></span>
+                <span>SOUND [S]</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Viewport: Contact Sheet 35mm Light Table -->
+    <main id="main-viewport" role="main"></main>
+
+    <!-- Site Footer -->
+    <footer class="site-footer">
+        <div class="footer-left">
+            <span>© 2024 GUSTAVO MARTINEZ • ALL RIGHTS RESERVED</span>
+        </div>
+        <div class="footer-center">
+            <span>KEYS: <kbd>[L]</kbd> LOUPE • <kbd>[S]</kbd> AUDIO • <kbd>[ESC]</kbd> CLOSE • <kbd>[←] / [→]</kbd> NAVIGATE FRAMES</span>
+        </div>
+        <div class="footer-right">
+            <a href="about.html">ABOUT THE ARTIST →</a>
+        </div>
+    </footer>
+
+    <!-- App Entry Script -->
+    <script type="module" src="js/app.js"></script>
 </body>
-
 </html>
