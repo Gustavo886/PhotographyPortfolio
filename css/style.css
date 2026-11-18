@@ -19,7 +19,7 @@
     --chinagraph-yellow: #ffb703;
     --film-amber: #e8a838;
 
-    --font-display: 'Syne', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-heading: 'Syne', -apple-system, BlinkMacSystemFont, sans-serif;
     --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     --font-mono: 'Courier Prime', 'SF Mono', Consolas, monospace;
 
@@ -128,7 +128,7 @@ body.lightbox-locked {
 }
 
 .site-logo {
-    font-family: var(--font-display);
+    font-family: var(--font-heading);
     font-size: 1.35rem;
     font-weight: 800;
     letter-spacing: 0.12em;
