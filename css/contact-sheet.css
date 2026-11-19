@@ -88,24 +88,9 @@
 /* Roll Provenance Log Tag */
 .film-roll-header {
     display: flex;
-    justify-content: space-between;
-    align-items: baseline;
+    align-items: center;
     padding-bottom: 0.6rem;
     border-bottom: 1px solid var(--border-dim);
-}
-
-.roll-tag-group {
-    display: flex;
-    align-items: baseline;
-    gap: 1rem;
-}
-
-.roll-code {
-    font-family: var(--font-mono);
-    font-size: 0.85rem;
-    font-weight: 700;
-    color: var(--chinagraph-yellow);
-    letter-spacing: 0.1em;
 }
 
 .roll-series {
@@ -114,18 +99,6 @@
     font-weight: 700;
     letter-spacing: 0.06em;
     text-transform: uppercase;
-}
-
-.roll-specs {
-    display: flex;
-    gap: 1.2rem;
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-    color: var(--text-muted);
-}
-
-.spec-k {
-    color: var(--text-subtle);
 }
 
 /* ==========================================================================
@@ -362,12 +335,6 @@
     }
     .roll-series {
         font-size: 1.05rem;
-    }
-    .roll-specs {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.6rem;
-        font-size: 0.66rem;
     }
     .film-frame {
         width: 270px; /* Shows full frame with peek of next frame */

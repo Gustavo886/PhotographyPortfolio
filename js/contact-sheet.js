@@ -20,8 +20,6 @@ export function renderContactSheet(container, onSelectFrame, onFrameHover) {
             <span>5 ROLLS</span>
             <span>•</span>
             <span>15 FRAMES</span>
-            <span>•</span>
-            <span>TRI-X 400 / HP5+ / T-MAX 3200</span>
         </div>
         <div class="light-table-actions">
             <span class="loupe-guide-pill">HOVER FOR 2.5X LOUPE</span>
@@ -36,21 +34,12 @@ export function renderContactSheet(container, onSelectFrame, onFrameHover) {
     projects.forEach((project) => {
         const rollSection = document.createElement('section');
         rollSection.className = 'film-roll-section';
-        rollSection.dataset.rollId = project.rollCode;
+        rollSection.dataset.rollId = project.id;
 
-        // Roll Log / Darkroom Spec Tag
+        // Clean series header (removed roll codes and technical emulsion specs)
         rollSection.innerHTML = `
             <div class="film-roll-header">
-                <div class="roll-tag-group">
-                    <span class="roll-code">${project.rollCode}</span>
-                    <span class="roll-series">${project.title}</span>
-                </div>
-                <div class="roll-specs">
-                    <span class="spec-item"><span class="spec-k">EMULSION:</span> ${project.filmStock}</span>
-                    <span class="spec-item"><span class="spec-k">ISO:</span> ${project.iso}</span>
-                    <span class="spec-item"><span class="spec-k">DEV:</span> ${project.developer}</span>
-                    <span class="spec-item"><span class="spec-k">LOC:</span> ${project.location}</span>
-                </div>
+                <span class="roll-series">${project.title}</span>
             </div>
             <div class="film-strip-wrapper">
                 <div class="film-strip" data-film-stock="${project.filmStock}">

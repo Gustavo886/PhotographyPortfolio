@@ -4,9 +4,9 @@
  */
 
 import { siteConfig } from './data.js';
-import { renderContactSheet } from './contact-sheet.js';
-import { OpticalLoupe } from './loupe.js';
-import { Lightbox } from './lightbox.js';
+import { renderContactSheet } from './contact-sheet.js?v=4';
+import { OpticalLoupe } from './loupe.js?v=4';
+import { Lightbox } from './lightbox.js?v=4';
 
 class App {
     constructor() {
