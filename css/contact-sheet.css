@@ -54,44 +54,6 @@
     gap: 1.2rem;
 }
 
-.chinagraph-toggle-btn {
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid var(--border-dim);
-    color: var(--text-muted);
-    padding: 0.4rem 0.85rem;
-    border-radius: 4px;
-    font-size: 0.74rem;
-    font-family: var(--font-mono);
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.chinagraph-toggle-btn:hover {
-    background: rgba(255, 255, 255, 0.12);
-    color: var(--text-pure);
-}
-
-.chinagraph-toggle-btn.active {
-    background: rgba(230, 57, 70, 0.15);
-    border-color: rgba(230, 57, 70, 0.4);
-    color: #fff;
-}
-
-.chinagraph-toggle-btn .btn-indicator {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: #666;
-}
-
-.chinagraph-toggle-btn.active .btn-indicator {
-    background: var(--chinagraph-red);
-    box-shadow: 0 0 8px var(--chinagraph-red);
-}
-
 .loupe-guide-pill {
     font-family: var(--font-mono);
     font-size: 0.72rem;
@@ -366,108 +328,6 @@
     color: rgba(255, 255, 255, 0.35);
 }
 
-/* ==========================================================================
-   Authentic Chinagraph Grease Pencil Markings
-   ========================================================================== */
-
-.chinagraph-layer {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: 3;
-    transition: opacity 0.25s ease;
-}
-
-.light-table-surface.hide-chinagraph .chinagraph-layer {
-    opacity: 0 !important;
-}
-
-.chinagraph-svg {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    overflow: visible;
-}
-
-.crop-stroke {
-    fill: none;
-    stroke-width: 2.5;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    stroke-dasharray: 400;
-    animation: chinagraphDraw 0.6s var(--ease-out-expo) forwards;
-}
-
-.corner-tick {
-    stroke-width: 2.2;
-    stroke-linecap: round;
-}
-
-.circle-stroke {
-    fill: none;
-    stroke-width: 2.6;
-    stroke-linecap: round;
-    stroke-dasharray: 350;
-    animation: chinagraphDraw 0.5s var(--ease-out-expo) forwards;
-}
-
-@keyframes chinagraphDraw {
-    from { stroke-dashoffset: 400; }
-    to { stroke-dashoffset: 0; }
-}
-
-.chinagraph-red .crop-stroke,
-.chinagraph-red .corner-tick,
-.chinagraph-red .circle-stroke {
-    stroke: var(--chinagraph-red);
-    filter: drop-shadow(0 0 2px rgba(230, 57, 70, 0.8));
-}
-
-.chinagraph-yellow .crop-stroke,
-.chinagraph-yellow .corner-tick,
-.chinagraph-yellow .circle-stroke {
-    stroke: var(--chinagraph-yellow);
-    filter: drop-shadow(0 0 2px rgba(255, 183, 3, 0.8));
-}
-
-.chinagraph-tag {
-    position: absolute;
-    top: 8px;
-    left: 8px;
-    font-family: var(--font-mono);
-    font-weight: 700;
-    font-size: 0.68rem;
-    padding: 0.15rem 0.45rem;
-    border-radius: 2px;
-    letter-spacing: 0.08em;
-    user-select: none;
-}
-
-.chinagraph-tag.chinagraph-red {
-    background: var(--chinagraph-red);
-    color: #fff;
-    box-shadow: 0 2px 8px rgba(230, 57, 70, 0.6);
-}
-
-.chinagraph-tag.chinagraph-yellow {
-    background: var(--chinagraph-yellow);
-    color: #000;
-    box-shadow: 0 2px 8px rgba(255, 183, 3, 0.6);
-}
-
-.chinagraph-standalone {
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) rotate(-12deg);
-    font-size: 1.1rem;
-    padding: 0.3rem 0.8rem;
-}
-
 /* Mobile Adjustments */
 @media (max-width: 768px) {
     .light-table-header {
@@ -490,10 +350,6 @@
     }
     .loupe-guide-pill {
         display: none; /* Mouse hover does not exist on touchscreens */
-    }
-    .chinagraph-toggle-btn {
-        padding: 0.35rem 0.65rem;
-        font-size: 0.68rem;
     }
     .light-table-surface {
         padding: 1.8rem 0.9rem 4rem;

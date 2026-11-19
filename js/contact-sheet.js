@@ -5,8 +5,6 @@
 
 import { projects } from './data.js';
 
-let greasePencilVisible = true;
-
 export function renderContactSheet(container, onSelectFrame, onFrameHover) {
     container.innerHTML = '';
 
@@ -26,10 +24,6 @@ export function renderContactSheet(container, onSelectFrame, onFrameHover) {
             <span>TRI-X 400 / HP5+ / T-MAX 3200</span>
         </div>
         <div class="light-table-actions">
-            <button id="toggle-chinagraph-btn" class="chinagraph-toggle-btn ${greasePencilVisible ? 'active' : ''}" title="Toggle chinagraph grease-pencil annotations">
-                <span class="btn-indicator"></span>
-                <span class="btn-text">GREASE PENCIL MARKS</span>
-            </button>
             <span class="loupe-guide-pill">HOVER FOR 2.5X LOUPE</span>
         </div>
     `;
@@ -104,24 +98,11 @@ export function renderContactSheet(container, onSelectFrame, onFrameHover) {
     });
 
     container.appendChild(lightTableSurface);
-
-    // Toggle chinagraph grease pencil
-    const toggleBtn = lightTableHeader.querySelector('#toggle-chinagraph-btn');
-    if (toggleBtn) {
-        toggleBtn.addEventListener('click', () => {
-            greasePencilVisible = !greasePencilVisible;
-            toggleBtn.classList.toggle('active', greasePencilVisible);
-            lightTableSurface.classList.toggle('hide-chinagraph', !greasePencilVisible);
-        });
-    }
 }
 
 function renderFilmFrame(frame, project) {
-    const isHero = frame.selected;
-    const chinagraph = frame.chinagraph;
-
     return `
-        <div class="film-frame ${isHero ? 'is-hero' : ''}" data-frame-id="${frame.id}" data-frame-num="${frame.frameNum}">
+        <div class="film-frame" data-frame-id="${frame.id}" data-frame-num="${frame.frameNum}">
             <div class="frame-negative-window">
                 <img 
                     src="${frame.src}" 
@@ -130,9 +111,6 @@ function renderFilmFrame(frame, project) {
                     loading="lazy"
                     data-zoom-src="${frame.src}"
                 />
-                
-                <!-- Authentic Grease Pencil Overlay -->
-                ${renderChinagraphOverlay(chinagraph, frame)}
 
                 <div class="frame-hover-hud">
                     <span class="hud-frame-num">FRAME ${frame.frameNum}</span>
@@ -149,56 +127,6 @@ function renderFilmFrame(frame, project) {
             </div>
         </div>
     `;
-}
-
-function renderChinagraphOverlay(chinagraph, frame) {
-    if (!chinagraph) return '';
-
-    let content = '';
-    const colorClass = chinagraph.color === 'red' ? 'chinagraph-red' : 'chinagraph-yellow';
-
-    if (chinagraph.type === 'crop') {
-        const box = chinagraph.cropBox || { top: 6, left: 6, width: 88, height: 88 };
-        content = `
-            <svg class="chinagraph-svg ${colorClass}" viewBox="0 0 100 100" preserveAspectRatio="none">
-                <!-- Grease pencil hand-drawn crop box -->
-                <rect 
-                    x="${box.left}" 
-                    y="${box.top}" 
-                    width="${box.width}" 
-                    height="${box.height}" 
-                    class="crop-stroke"
-                />
-                <!-- Corner ticks -->
-                <line x1="${box.left - 2}" y1="${box.top}" x2="${box.left + 8}" y2="${box.top}" class="corner-tick"/>
-                <line x1="${box.left}" y1="${box.top - 2}" x2="${box.left}" y2="${box.top + 8}" class="corner-tick"/>
-                <line x1="${box.left + box.width - 8}" y1="${box.top + box.height}" x2="${box.left + box.width + 2}" y2="${box.top + box.height}" class="corner-tick"/>
-                <line x1="${box.left + box.width}" y1="${box.top + box.height - 8}" x2="${box.left + box.width}" y2="${box.top + box.height + 2}" class="corner-tick"/>
-            </svg>
-            ${chinagraph.annotation ? `<span class="chinagraph-tag ${colorClass}">${chinagraph.annotation}</span>` : ''}
-        `;
-    } else if (chinagraph.type === 'circle') {
-        const c = chinagraph.circle || { cx: 50, cy: 50, r: 40 };
-        content = `
-            <svg class="chinagraph-svg ${colorClass}" viewBox="0 0 100 100">
-                <ellipse 
-                    cx="${c.cx}" 
-                    cy="${c.cy}" 
-                    rx="${c.r}" 
-                    ry="${c.r * 0.9}" 
-                    transform="rotate(-4 50 50)" 
-                    class="circle-stroke"
-                />
-            </svg>
-            ${chinagraph.annotation ? `<span class="chinagraph-tag ${colorClass}">${chinagraph.annotation}</span>` : ''}
-        `;
-    } else {
-        content = `
-            <span class="chinagraph-tag ${colorClass} chinagraph-standalone">${chinagraph.annotation || '★'}</span>
-        `;
-    }
-
-    return `<div class="chinagraph-layer">${content}</div>`;
 }
 
 function generateSprocketTrack(filmStock, count) {

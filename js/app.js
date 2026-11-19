@@ -7,7 +7,6 @@ import { siteConfig } from './data.js';
 import { renderContactSheet } from './contact-sheet.js';
 import { OpticalLoupe } from './loupe.js';
 import { Lightbox } from './lightbox.js';
-import { sound } from './audio.js';
 
 class App {
     constructor() {
@@ -28,17 +27,6 @@ class App {
     }
 
     bindGlobalEvents() {
-        // Header Audio Toggle
-        const btnAudio = document.getElementById('audio-toggle-btn');
-        if (btnAudio) {
-            btnAudio.addEventListener('click', () => {
-                const isEnabled = sound.toggle();
-                btnAudio.classList.toggle('active', isEnabled);
-                btnAudio.setAttribute('aria-pressed', isEnabled ? 'true' : 'false');
-                if (isEnabled) sound.playClick();
-            });
-        }
-
         // Global Keyboard Shortcuts
         window.addEventListener('keydown', (e) => {
             if (['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) return;
@@ -50,8 +38,6 @@ class App {
                 if (indicator) {
                     indicator.textContent = loupeState ? 'LOUPE [ACTIVE]' : 'LOUPE [DISABLED]';
                 }
-            } else if (key === 's') {
-                if (btnAudio) btnAudio.click();
             }
         });
     }

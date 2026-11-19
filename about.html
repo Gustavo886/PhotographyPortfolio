@@ -41,13 +41,7 @@
             <a href="index.html" class="site-logo">GUSTAVO MARTINEZ</a>
         </div>
 
-        <div class="header-right">
-            <button id="about-audio-btn" class="audio-toggle-btn" title="Toggle tactile acoustic feedback (S)"
-                aria-pressed="false">
-                <span class="sound-indicator"></span>
-                <span>SOUND [S]</span>
-            </button>
-        </div>
+        <div class="header-right"></div>
     </header>
 
     <!-- About Section Hero Header -->
@@ -148,23 +142,6 @@
             <a href="https://www.instagram.com/gstv.mtz/" target="_blank" rel="noopener">INSTAGRAM →</a>
         </div>
     </footer>
-
-    <!-- Audio Script -->
-    <script type="module">
-        import { sound } from './js/audio.js';
-        const btn = document.getElementById('about-audio-btn');
-        if (btn) {
-            btn.addEventListener('click', () => {
-                const active = sound.toggle();
-                btn.classList.toggle('active', active);
-                btn.setAttribute('aria-pressed', active ? 'true' : 'false');
-                if (active) sound.playClick();
-            });
-        }
-        window.addEventListener('keydown', (e) => {
-            if (e.key.toLowerCase() === 's' && btn) btn.click();
-        });
-    </script>
 </body>
 
 </html>

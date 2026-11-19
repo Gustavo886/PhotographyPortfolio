@@ -4,8 +4,6 @@
  * and optical glass distortion.
  */
 
-import { sound } from './audio.js';
-
 export class OpticalLoupe {
     constructor() {
         this.loupeEl = null;
@@ -97,8 +95,6 @@ export class OpticalLoupe {
         // Set high-res background source
         const src = img.getAttribute('src');
         this.lensGlass.style.backgroundImage = `url("${src}")`;
-
-        sound.playLoupeSnap();
     }
 
     updateMagnification(e) {

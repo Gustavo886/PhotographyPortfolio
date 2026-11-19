@@ -4,7 +4,6 @@
  */
 
 import { projects } from './data.js';
-import { sound } from './audio.js';
 
 export class Lightbox {
     constructor() {
@@ -166,7 +165,6 @@ export class Lightbox {
         this.modalEl.classList.add('is-open');
         document.body.classList.add('lightbox-locked');
 
-        sound.playClick();
         this.renderCurrent();
     }
 
@@ -211,7 +209,6 @@ export class Lightbox {
         } else {
             this.currentIndex = this.allFramesList.length - 1; // Wrap
         }
-        sound.playClick();
         this.renderCurrent();
     }
 
@@ -221,7 +218,6 @@ export class Lightbox {
         } else {
             this.currentIndex = 0; // Wrap
         }
-        sound.playClick();
         this.renderCurrent();
     }
 
@@ -229,6 +225,5 @@ export class Lightbox {
         this.isOpen = false;
         this.modalEl.classList.remove('is-open');
         document.body.classList.remove('lightbox-locked');
-        sound.playClick();
     }
 }
