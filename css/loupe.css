@@ -313,9 +313,9 @@
 
 /* Bottom Metadata Drawer */
 .lightbox-footer {
-    display: grid;
-    grid-template-columns: 1.4fr 2fr;
-    gap: 3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
     padding-top: 1.2rem;
     border-top: 1px solid var(--border-dim);
 }
@@ -339,31 +339,6 @@
     font-size: 0.85rem;
     color: var(--text-muted);
     line-height: 1.5;
-}
-
-.footer-meta-technical {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1.2rem;
-}
-
-.tech-spec {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-}
-
-.tech-label {
-    font-family: var(--font-mono);
-    font-size: 0.65rem;
-    color: var(--text-subtle);
-    letter-spacing: 0.12em;
-}
-
-.tech-val {
-    font-family: var(--font-mono);
-    font-size: 0.76rem;
-    color: var(--text-high);
 }
 
 /* Mobile Adjustments */
@@ -415,17 +390,6 @@
     }
     .lb-caption {
         font-size: 0.78rem;
-    }
-    .footer-meta-technical {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 0.6rem;
-    }
-    .tech-label {
-        font-size: 0.58rem;
-    }
-    .tech-val {
-        font-size: 0.72rem;
-        word-break: break-word;
     }
     .lb-nav-btn {
         width: 44px;

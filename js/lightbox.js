@@ -1,6 +1,6 @@
 /**
  * Lightbox / Full-Bleed Frame Inspector Module
- * Museum-quality darkroom modal with EXIF & frame provenance metadata.
+ * Museum-quality darkroom modal with series title and caption.
  */
 
 import { projects } from './data.js';
@@ -39,11 +39,7 @@ export class Lightbox {
                 <!-- Top Utility Bar -->
                 <header class="lightbox-header">
                     <div class="lightbox-breadcrumbs">
-                        <span class="lb-roll" id="lb-roll-code">ROLL-00</span>
-                        <span class="lb-sep">/</span>
                         <span class="lb-series" id="lb-series-title">PROJECT</span>
-                        <span class="lb-sep">/</span>
-                        <span class="lb-frame-tag" id="lb-frame-tag">FRAME 00</span>
                     </div>
                     <div class="lightbox-actions">
                         <span class="lightbox-counter" id="lb-counter">1 / 15</span>
@@ -81,24 +77,6 @@ export class Lightbox {
                     <div class="footer-meta-primary">
                         <h2 class="lb-title" id="lb-title">Frame Title</h2>
                         <p class="lb-caption" id="lb-caption">Frame caption description.</p>
-                    </div>
-                    <div class="footer-meta-technical">
-                        <div class="tech-spec">
-                            <span class="tech-label">CAMERA & OPTIC</span>
-                            <span class="tech-val" id="lb-gear">35mm • 28mm f/2.8</span>
-                        </div>
-                        <div class="tech-spec">
-                            <span class="tech-label">EXPOSURE</span>
-                            <span class="tech-val" id="lb-exposure">1/500s @ f/8</span>
-                        </div>
-                        <div class="tech-spec">
-                            <span class="tech-label">EMULSION / DEV</span>
-                            <span class="tech-val" id="lb-emulsion">KODAK TRI-X 400</span>
-                        </div>
-                        <div class="tech-spec">
-                            <span class="tech-label">LOCATION</span>
-                            <span class="tech-val" id="lb-location">Mexico City • 2023</span>
-                        </div>
                     </div>
                 </footer>
             </div>
@@ -177,30 +155,18 @@ export class Lightbox {
 
         // Elements
         const img = this.modalEl.querySelector('#lb-main-image');
-        const rollCode = this.modalEl.querySelector('#lb-roll-code');
         const seriesTitle = this.modalEl.querySelector('#lb-series-title');
-        const frameTag = this.modalEl.querySelector('#lb-frame-tag');
         const counter = this.modalEl.querySelector('#lb-counter');
         const title = this.modalEl.querySelector('#lb-title');
         const caption = this.modalEl.querySelector('#lb-caption');
-        const gear = this.modalEl.querySelector('#lb-gear');
-        const exposure = this.modalEl.querySelector('#lb-exposure');
-        const emulsion = this.modalEl.querySelector('#lb-emulsion');
-        const location = this.modalEl.querySelector('#lb-location');
 
         // Populate
         img.src = frame.src;
         img.alt = `${project.title} - ${frame.title}`;
-        rollCode.textContent = project.rollCode;
         seriesTitle.textContent = project.title;
-        frameTag.textContent = `FRAME #${frame.frameNum}`;
         counter.textContent = `${this.currentIndex + 1} / ${this.allFramesList.length}`;
         title.textContent = frame.title;
         caption.textContent = frame.caption || project.description;
-        gear.textContent = `${frame.camera} • ${frame.lens}`;
-        exposure.textContent = frame.exposure;
-        emulsion.textContent = `${project.filmStock} (${project.iso}) • ${project.developer}`;
-        location.textContent = `${project.location} • ${project.year}`;
     }
 
     prev() {
