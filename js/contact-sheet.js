@@ -3,7 +3,7 @@
  * Renders authentic 35mm film negative strips on a darkroom light table.
  */
 
-import { projects } from './data.js';
+import { projects } from './data.js?v=6';
 
 export function renderContactSheet(container, onSelectFrame, onFrameHover) {
     container.innerHTML = '';

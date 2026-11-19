@@ -3,7 +3,7 @@
  * Museum-quality darkroom modal with series title and caption.
  */
 
-import { projects } from './data.js';
+import { projects } from './data.js?v=6';
 
 export class Lightbox {
     constructor() {

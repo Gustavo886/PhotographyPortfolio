@@ -3,10 +3,10 @@
  * Gustavo Martinez — 35mm Contact Sheet Portfolio
  */
 
-import { siteConfig } from './data.js';
-import { renderContactSheet } from './contact-sheet.js?v=5';
-import { OpticalLoupe } from './loupe.js?v=5';
-import { Lightbox } from './lightbox.js?v=5';
+import { siteConfig } from './data.js?v=6';
+import { renderContactSheet } from './contact-sheet.js?v=6';
+import { OpticalLoupe } from './loupe.js?v=6';
+import { Lightbox } from './lightbox.js?v=6';
 
 class App {
     constructor() {
